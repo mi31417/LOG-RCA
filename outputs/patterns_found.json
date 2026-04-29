@@ -1,0 +1,498 @@
+{
+  "total_rows": 2000,
+  "total_columns": 17,
+  "patterns": [
+    {
+      "pattern": "dataset_overview",
+      "description": "Basic dataset size, schema, and missing-value summary",
+      "total_rows": 2000,
+      "total_columns": 17,
+      "columns": [
+        "LineId",
+        "Date",
+        "Time",
+        "Level",
+        "Component",
+        "Content",
+        "EventId",
+        "EventTemplate",
+        "timestamp",
+        "hresult",
+        "kb_package",
+        "session_id",
+        "param_count",
+        "has_failure",
+        "has_warning",
+        "has_hresult",
+        "event_class"
+      ],
+      "columns_with_missing_values": {
+        "hresult": {
+          "missing_count": 2000,
+          "missing_pct": 100.0
+        },
+        "kb_package": {
+          "missing_count": 2000,
+          "missing_pct": 100.0
+        },
+        "session_id": {
+          "missing_count": 2000,
+          "missing_pct": 100.0
+        }
+      }
+    },
+    {
+      "pattern": "column_type_summary",
+      "description": "Data type, non-null count, and cardinality for each column",
+      "columns": {
+        "LineId": {
+          "dtype": "int64",
+          "non_null_count": 2000,
+          "unique_count": 2000,
+          "unique_pct": 100.0
+        },
+        "Date": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 2,
+          "unique_pct": 0.1
+        },
+        "Time": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 759,
+          "unique_pct": 37.95
+        },
+        "Level": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 2,
+          "unique_pct": 0.1
+        },
+        "Component": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 4,
+          "unique_pct": 0.2
+        },
+        "Content": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 886,
+          "unique_pct": 44.3
+        },
+        "EventId": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 2000,
+          "unique_pct": 100.0
+        },
+        "EventTemplate": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 6,
+          "unique_pct": 0.3
+        },
+        "timestamp": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 759,
+          "unique_pct": 37.95
+        },
+        "hresult": {
+          "dtype": "float64",
+          "non_null_count": 0,
+          "unique_count": 0,
+          "unique_pct": 0.0
+        },
+        "kb_package": {
+          "dtype": "float64",
+          "non_null_count": 0,
+          "unique_count": 0,
+          "unique_pct": 0.0
+        },
+        "session_id": {
+          "dtype": "float64",
+          "non_null_count": 0,
+          "unique_count": 0,
+          "unique_pct": 0.0
+        },
+        "param_count": {
+          "dtype": "int64",
+          "non_null_count": 2000,
+          "unique_count": 4,
+          "unique_pct": 0.2
+        },
+        "has_failure": {
+          "dtype": "bool",
+          "non_null_count": 2000,
+          "unique_count": 2,
+          "unique_pct": 0.1
+        },
+        "has_warning": {
+          "dtype": "bool",
+          "non_null_count": 2000,
+          "unique_count": 1,
+          "unique_pct": 0.05
+        },
+        "has_hresult": {
+          "dtype": "bool",
+          "non_null_count": 2000,
+          "unique_count": 1,
+          "unique_pct": 0.05
+        },
+        "event_class": {
+          "dtype": "object",
+          "non_null_count": 2000,
+          "unique_count": 2,
+          "unique_pct": 0.1
+        }
+      }
+    },
+    {
+      "pattern": "categorical_dominance",
+      "description": "Low-cardinality columns and their dominant values",
+      "columns_analyzed": 9,
+      "dominant_columns": [
+        {
+          "column": "Date",
+          "unique_values": 2,
+          "top_value": "2005-12-04",
+          "top_count": 1051,
+          "top_pct": 52.55,
+          "top_values": {
+            "2005-12-04": 1051,
+            "2005-12-05": 949
+          }
+        },
+        {
+          "column": "Level",
+          "unique_values": 2,
+          "top_value": "Info",
+          "top_count": 1405,
+          "top_pct": 70.25,
+          "top_values": {
+            "Info": 1405,
+            "Error": 595
+          }
+        },
+        {
+          "column": "Component",
+          "unique_values": 4,
+          "top_value": "jk2_init",
+          "top_count": 848,
+          "top_pct": 42.4,
+          "top_values": {
+            "jk2_init": 848,
+            "workerEnv.init": 569,
+            "mod_jk": 551,
+            "client": 32
+          }
+        },
+        {
+          "column": "EventTemplate",
+          "unique_values": 6,
+          "top_value": "jk2_init() Found child <*> in scoreboard slot <*>",
+          "top_count": 836,
+          "top_pct": 41.8,
+          "top_values": {
+            "jk2_init() Found child <*> in scoreboard slot <*>": 836,
+            "workerEnv.init() ok /etc/httpd/conf/workers2.properties": 569,
+            "mod_jk child workerEnv in error state <*>": 539,
+            "[client <*>.<*>.<*>.<*>] Directory index forbidden by rule: /var/www/html/": 32,
+            "jk2_init() Can't find child <*> in scoreboard": 12,
+            "mod_jk child init <*> -<*>": 12
+          }
+        },
+        {
+          "column": "param_count",
+          "unique_values": 4,
+          "top_value": "2",
+          "top_count": 848,
+          "top_pct": 42.4,
+          "top_values": {
+            "2": 848,
+            "0": 569,
+            "1": 551,
+            "4": 32
+          }
+        },
+        {
+          "column": "has_failure",
+          "unique_values": 2,
+          "top_value": "False",
+          "top_count": 1405,
+          "top_pct": 70.25,
+          "top_values": {
+            "False": 1405,
+            "True": 595
+          }
+        },
+        {
+          "column": "has_warning",
+          "unique_values": 1,
+          "top_value": "False",
+          "top_count": 2000,
+          "top_pct": 100.0,
+          "top_values": {
+            "False": 2000
+          }
+        },
+        {
+          "column": "has_hresult",
+          "unique_values": 1,
+          "top_value": "False",
+          "top_count": 2000,
+          "top_pct": 100.0,
+          "top_values": {
+            "False": 2000
+          }
+        },
+        {
+          "column": "event_class",
+          "unique_values": 2,
+          "top_value": "INIT",
+          "top_count": 1405,
+          "top_pct": 70.25,
+          "top_values": {
+            "INIT": 1405,
+            "FAILURE": 595
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "numeric_outliers",
+      "description": "Numeric columns summarized with IQR-based outlier detection",
+      "numeric_columns_analyzed": 2,
+      "outlier_findings": [
+        {
+          "column": "LineId",
+          "numeric_count": 2000,
+          "min": 1.0,
+          "max": 2000.0,
+          "mean": 1000.5,
+          "median": 1000.5,
+          "std": 577.4946,
+          "outlier_count": 0,
+          "outlier_pct": 0.0,
+          "lower_bound": -998.5,
+          "upper_bound": 2999.5
+        },
+        {
+          "column": "param_count",
+          "numeric_count": 2000,
+          "min": 0.0,
+          "max": 4.0,
+          "mean": 1.1875,
+          "median": 1.0,
+          "std": 0.9043,
+          "outlier_count": 0,
+          "outlier_pct": 0.0,
+          "lower_bound": -3.0,
+          "upper_bound": 5.0
+        }
+      ]
+    },
+    {
+      "pattern": "boolean_flag_distribution",
+      "description": "Boolean and boolean-like column distributions",
+      "boolean_columns_found": 3,
+      "flags": [
+        {
+          "column": "has_failure",
+          "true_count": 595,
+          "false_count": 1405,
+          "true_pct": 29.75,
+          "false_pct": 70.25
+        },
+        {
+          "column": "has_warning",
+          "true_count": 0,
+          "false_count": 2000,
+          "true_pct": 0.0,
+          "false_pct": 100.0
+        },
+        {
+          "column": "has_hresult",
+          "true_count": 0,
+          "false_count": 2000,
+          "true_pct": 0.0,
+          "false_pct": 100.0
+        }
+      ]
+    },
+    {
+      "pattern": "timestamp_bursts",
+      "description": "Rows sharing identical timestamp values",
+      "timestamp_source": "timestamp",
+      "valid_timestamps": 2000,
+      "unique_timestamps": 759,
+      "burst_timestamps": 485,
+      "rows_in_bursts": 1726,
+      "pct_rows_in_bursts": 86.3,
+      "largest_burst_count": 18,
+      "largest_burst_timestamp": "2005-12-05 07:57:02"
+    },
+    {
+      "pattern": "text_signal_summary",
+      "description": "Keyword-based signal summary from the most useful text column",
+      "text_column_used": "Content",
+      "signals": {
+        "error_failure": {
+          "count": 539,
+          "pct": 26.95
+        },
+        "warning": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "timeout": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "reboot_restart_shutdown": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "success_complete": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "login_auth": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    {
+      "pattern": "event_sequences",
+      "description": "Most common adjacent 2-event and 3-event sequences",
+      "event_column_used": "EventId",
+      "total_events": 2000,
+      "top_2_event_sequences": {
+        "E1 -> E2": 1,
+        "E2 -> E3": 1,
+        "E3 -> E4": 1,
+        "E4 -> E5": 1,
+        "E5 -> E6": 1,
+        "E6 -> E7": 1,
+        "E7 -> E8": 1,
+        "E8 -> E9": 1,
+        "E9 -> E10": 1,
+        "E10 -> E11": 1
+      },
+      "top_3_event_sequences": {
+        "E1 -> E2 -> E3": 1,
+        "E2 -> E3 -> E4": 1,
+        "E3 -> E4 -> E5": 1,
+        "E4 -> E5 -> E6": 1,
+        "E5 -> E6 -> E7": 1,
+        "E6 -> E7 -> E8": 1,
+        "E7 -> E8 -> E9": 1,
+        "E8 -> E9 -> E10": 1,
+        "E9 -> E10 -> E11": 1,
+        "E10 -> E11 -> E12": 1
+      }
+    },
+    {
+      "pattern": "code_repetition",
+      "description": "Repeated IDs, codes, packages, templates, and code-like fields",
+      "columns_analyzed": 4,
+      "repetition_findings": [
+        {
+          "column": "LineId",
+          "non_empty_rows": 2000,
+          "unique_values": 2000,
+          "top_value": "1",
+          "top_count": 1,
+          "top_pct_of_non_empty": 0.05,
+          "top_values": {
+            "1": 1,
+            "1330": 1,
+            "1343": 1,
+            "1342": 1,
+            "1341": 1,
+            "1340": 1,
+            "1339": 1,
+            "1338": 1,
+            "1337": 1,
+            "1336": 1
+          }
+        },
+        {
+          "column": "EventId",
+          "non_empty_rows": 2000,
+          "unique_values": 2000,
+          "top_value": "E1",
+          "top_count": 1,
+          "top_pct_of_non_empty": 0.05,
+          "top_values": {
+            "E1": 1,
+            "E1330": 1,
+            "E1343": 1,
+            "E1342": 1,
+            "E1341": 1,
+            "E1340": 1,
+            "E1339": 1,
+            "E1338": 1,
+            "E1337": 1,
+            "E1336": 1
+          }
+        },
+        {
+          "column": "EventTemplate",
+          "non_empty_rows": 2000,
+          "unique_values": 6,
+          "top_value": "jk2_init() Found child <*> in scoreboard slot <*>",
+          "top_count": 836,
+          "top_pct_of_non_empty": 41.8,
+          "top_values": {
+            "jk2_init() Found child <*> in scoreboard slot <*>": 836,
+            "workerEnv.init() ok /etc/httpd/conf/workers2.properties": 569,
+            "mod_jk child workerEnv in error state <*>": 539,
+            "[client <*>.<*>.<*>.<*>] Directory index forbidden by rule: /var/www/html/": 32,
+            "jk2_init() Can't find child <*> in scoreboard": 12,
+            "mod_jk child init <*> -<*>": 12
+          }
+        },
+        {
+          "column": "event_class",
+          "non_empty_rows": 2000,
+          "unique_values": 2,
+          "top_value": "INIT",
+          "top_count": 1405,
+          "top_pct_of_non_empty": 70.25,
+          "top_values": {
+            "INIT": 1405,
+            "FAILURE": 595
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "template_complexity",
+      "description": "Statistics on variable placeholders in templates",
+      "source_column": "param_count",
+      "mean": 1.1875,
+      "min": 0,
+      "max": 4,
+      "median": 1.0,
+      "std": 0.9043,
+      "pct_zero_params": 28.45,
+      "pct_high_params": 0.0,
+      "distribution": {
+        "0": 569,
+        "1": 551,
+        "2": 848,
+        "4": 32
+      }
+    },
+    {
+      "pattern": "correlation_candidates",
+      "description": "Highly correlated numeric-like column pairs",
+      "strong_pairs_found": 0,
+      "strong_pairs": []
+    }
+  ]
+}

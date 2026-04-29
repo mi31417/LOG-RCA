@@ -1,0 +1,466 @@
+{
+  "success": true,
+  "results": [
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "LineId"
+        },
+        "meta": {},
+        "id": "d903d554-d6d6-4c25-846b-3079cb6b0429",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_unique",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "LineId"
+        },
+        "meta": {},
+        "id": "279fa70e-666a-4413-a5a8-349e3ca47d92",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "LineId",
+          "min_value": 1.0,
+          "max_value": 100000.0
+        },
+        "meta": {},
+        "id": "cfdea751-4a11-4e5d-83d1-a06a8a069590",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "Date"
+        },
+        "meta": {},
+        "id": "397b9c05-b86d-42c1-88fa-e097bb1b3a30",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_match_regex",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "Date",
+          "regex": "\\d{4}-\\d{2}-\\d{2}"
+        },
+        "meta": {},
+        "id": "c65cd451-bab2-48a4-911e-22bc6f0d0d78",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "Time"
+        },
+        "meta": {},
+        "id": "002b3dc0-c58e-44bb-8c0e-f4440f94d9d5",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "Component"
+        },
+        "meta": {},
+        "id": "538763f6-f603-4905-aab4-71ea0d26fc60",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "Content"
+        },
+        "meta": {},
+        "id": "30ec1887-c47b-4ee6-b570-2f557ada96f1",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "EventId"
+        },
+        "meta": {},
+        "id": "d6e64048-3de0-4f56-89a4-359f6dd1ff80",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_match_regex",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "EventId",
+          "regex": "E\\d+"
+        },
+        "meta": {},
+        "id": "6947dc85-7743-47ad-b5d9-7a82234a2b9d",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "Level",
+          "value_set": [
+            "Info",
+            "Error",
+            "Warning",
+            "Critical"
+          ]
+        },
+        "meta": {},
+        "id": "2aad7722-8b73-4340-8f51-4bc7c7a05f8e",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "event_class",
+          "value_set": [
+            "REBOOT",
+            "FAILURE",
+            "INIT",
+            "INFO",
+            "WARNING",
+            "SESSION",
+            "PACKAGE"
+          ]
+        },
+        "meta": {},
+        "id": "15043541-647d-4d44-8e60-02b0deb4c78b",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "param_count",
+          "min_value": 0.0,
+          "max_value": 20.0
+        },
+        "meta": {},
+        "id": "d02eeff9-ccf7-4c4d-a100-54868f2dd4d3",
+        "severity": "critical"
+      },
+      "result": {
+        "element_count": 2000,
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "partial_unexpected_list": [],
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "unexpected_percent_total": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": []
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    },
+    {
+      "success": true,
+      "expectation_config": {
+        "type": "expect_column_mean_to_be_between",
+        "kwargs": {
+          "batch_id": "log_datasource-parsed_logs",
+          "column": "has_failure",
+          "min_value": 0.0,
+          "max_value": 0.5
+        },
+        "meta": {},
+        "id": "d1670462-3b65-4c79-81af-fb1aa2bbbca5",
+        "severity": "critical"
+      },
+      "result": {
+        "observed_value": 0.2975
+      },
+      "meta": {},
+      "exception_info": {
+        "raised_exception": false,
+        "exception_traceback": null,
+        "exception_message": null
+      }
+    }
+  ],
+  "suite_name": "log_quality_suite",
+  "suite_parameters": {},
+  "statistics": {
+    "evaluated_expectations": 14,
+    "successful_expectations": 14,
+    "unsuccessful_expectations": 0,
+    "success_percent": 100.0
+  },
+  "meta": {
+    "great_expectations_version": "1.15.1",
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "batch_markers": {
+      "ge_load_time": "20260429T033217.891260Z",
+      "pandas_data_fingerprint": "d3ffb198a4bd7667b10f963abdceed93"
+    },
+    "active_batch_definition": {
+      "datasource_name": "log_datasource",
+      "data_connector_name": "fluent",
+      "data_asset_name": "parsed_logs",
+      "batch_identifiers": {
+        "dataframe": "<DATAFRAME>"
+      }
+    },
+    "validation_id": "240226ec-49c1-4d7c-8f96-283c5272571a",
+    "checkpoint_id": null,
+    "run_id": {
+      "run_name": null,
+      "run_time": "2026-04-28T23:32:18.103747-04:00"
+    },
+    "validation_time": "2026-04-29T03:32:18.103747+00:00",
+    "batch_parameters": {
+      "dataframe": "<DATAFRAME>"
+    }
+  },
+  "id": null
+}

@@ -1,0 +1,7 @@
+pandas
+great-expectations
+faker
+matplotlib
+python-dotenv
+requests
+flask

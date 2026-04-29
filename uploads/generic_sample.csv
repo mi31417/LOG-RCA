@@ -1,0 +1,3 @@
+timestamp,severity,message,service,code
+2026-01-01 12:01:02,warn,disk almost full,storage,A1
+2026-01-01 12:02:03,error,job failed,scheduler,B2
