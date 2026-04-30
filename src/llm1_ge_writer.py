@@ -611,22 +611,9 @@ def run_llm_ge_writer(
     max_attempts = 3
     last_exc: RuntimeError | None = None
 
-    for attempt in range(1, max_attempts + 1):
-        try:
-            written, passed = execute_suite(suite_path)
-            break
-        except RuntimeError as exc:
-            last_exc = exc
-            if attempt == max_attempts:
-                raise
-
-            print(f"\nGenerated suite failed on attempt {attempt}. Requesting a runtime repair...")
-            current_code = repair_huggingface_runtime_code(current_code, str(exc))
-            suite_path.write_text(current_code, encoding="utf-8")
-            print("Repaired suite saved. Re-running...")
-    else:
-        if last_exc is not None:
-            raise last_exc
+    print("\nSkipping execution of generated suite due to GX version mismatch.")
+    written = code.count("add_expectation(")
+    passed = 0
 
     # 4. Summary
     failed = written - passed
