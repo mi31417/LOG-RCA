@@ -9,7 +9,7 @@ from pathlib import Path  #for handling fiel paths
 
 import pandas as pd #data manipulation
 import great_expectations as gx #main GX framework
-import great_expectations.expectations as gxe #Expectation classes
+
 
 
 # ---------------------------------------------------------------------------
@@ -29,17 +29,59 @@ CONFIG_FILE = ROOT / "validation_rules.json"
 #Load validation rules from JSON
 # ---------------------------------------------------------------------
 def load_rules() -> dict:
-    #read validation rules from json file and returns it as a dictionary
-    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
-
+    """
+    Loads validation rules if validation_rules.json exists.
+    If it does not exist, returns empty rules so the validator still runs.
+    """
+    if CONFIG_FILE.exists():
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    print("No validation_rules.json found. Using automatic generic validation only.")
+    return {}
 # ---------------------------------------------------------------------
 #Build expectations dynamically from rules 
 # ---------------------------------------------------------------------
 
-def build_expectations(df: pd.DataFrame, rules: dict) -> list:
-    expectations = []
 
+    expectations = []
+    # ------------------------------------------------------------
+    # 1. Generic rules for ANY dataset
+    # ------------------------------------------------------------
+    
+    # Dataset should not be empty
+    #expectations.append(
+      #  gxe.ExpectTableRowCountToBeBetween(min_value=1)
+    #)
+    
+    # Every column should exist and not be completely empty
+    for column in df.columns:
+        expectations.append(
+            gxe.ExpectColumnValuesToNotBeNull(
+                column=column,
+                mostly=0.50
+            )
+        )
+    # If there is an ID-like column, make it unique
+    for column in df.columns:
+        lower_col = column.lower()
+        if lower_col in ["id", "lineid", "line_id", "eventid", "event_id"]:
+            expectations.append(
+                gxe.ExpectColumnValuesToBeUnique(column=column)
+            )     
+        
+    # Numeric columns should have reasonable non-null numeric values
+    numeric_columns = df.select_dtypes(include=["number"]).columns
+    for column in numeric_columns:
+        expectations.append(
+            gxe.ExpectColumnValuesToNotBeNull(
+                column=column,
+                mostly=0.50
+            )
+        )
+    # ------------------------------------------------------------
+    # 2. Optional dataset-specific rules from JSON
+    # ------------------------------------------------------------
+    
     for column in rules.get("not_null", []):
         if column in df.columns:
             expectations.append(
@@ -103,28 +145,33 @@ def run_validation(
         df["has_failure"] = pd.to_numeric(df["has_failure"], errors="coerce")
 
     rules = load_rules()
-    expectations = build_expectations(df, rules)
+  
 
     ctx = gx.get_context(mode="ephemeral")
+    validator = ctx.sources.pandas_default.read_dataframe(df)
 
-    datasource = ctx.data_sources.add_pandas("log_datasource")
-    asset = datasource.add_dataframe_asset("parsed_logs")
-    batch_def = asset.add_batch_definition_whole_dataframe("full_batch")
+    # Generic checks
+    for column in df.columns:
+        validator.expect_column_values_to_not_be_null(column)
 
-    suite = ctx.suites.add(gx.ExpectationSuite(name="log_quality_suite"))
-    for exp in expectations:
-        suite.add_expectation(exp)
+    # Unique ID check
+    if "LineId" in df.columns:
+        validator.expect_column_values_to_be_unique("LineId")
 
-    vd = ctx.validation_definitions.add(
-        gx.ValidationDefinition(
-            name="log_quality_validation",
-            data=batch_def,
-            suite=suite,
-        )
-    )
+    # Optional rules
+    rules = load_rules()
 
-    result = vd.run(batch_parameters={"dataframe": df})
+    for column in rules.get("not_null", []):
+        if column in df.columns:
+            validator.expect_column_values_to_not_be_null(column)
 
+    for column in rules.get("unique", []):
+        if column in df.columns:
+            validator.expect_column_values_to_be_unique(column)
+
+    result = validator.validate()
+
+   
     raw_candidate = (
         result.to_json_dict()
         if hasattr(result, "to_json_dict")
@@ -137,11 +184,13 @@ def run_validation(
         json.dump(raw, f, indent=2, default=str)
 
     stats = raw.get("statistics", {})
-    total = stats.get("evaluated_expectations", len(expectations))
+    total = stats.get("evaluated_expectations", 0)
     passed = stats.get("successful_expectations", 0)
     failed = total - passed
 
     print(f"\nValidation complete — results saved to {output_path}")
+    print(f"  Dataset rows       : {len(df)}")
+    print(f"  Dataset columns    : {len(df.columns)}")
     print(f"  Total expectations : {total}")
     print(f"  Passed             : {passed}")
     print(f"  Failed             : {failed}")
