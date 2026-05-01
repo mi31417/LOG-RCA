@@ -1,177 +1,115 @@
 """
 Stage 2 – Great Expectations Validator
-Reads outputs/parsed_logs.csv, loads validation rules from validation_rules.json,
-runs an expectation suite, and saves results.
+Reads outputs/parsed_logs.csv, loads validation rules, runs validation,
+and saves results.
 """
 
-import json #for reading json config file
-from pathlib import Path  #for handling fiel paths
+import json
+from pathlib import Path
 
-import pandas as pd #data manipulation
-import great_expectations as gx #main GX framework
+import pandas as pd
+import great_expectations as gx
 
 
-
-# ---------------------------------------------------------------------------
-# Paths
-# ---------------------------------------------------------------------------
-#Root directory of the project (it goes up one level from /src)
 ROOT = Path(__file__).resolve().parents[1]
-#input datset (outputs from stage1)
+
 INPUT_FILE = ROOT / "outputs" / "parsed_logs.csv"
-#output file from validation results
 OUTPUT_FILE = ROOT / "outputs" / "validation_results.json"
-#JSON file containing validation rules
 CONFIG_FILE = ROOT / "validation_rules.json"
 
 
-# ---------------------------------------------------------------------
-#Load validation rules from JSON
-# ---------------------------------------------------------------------
 def load_rules() -> dict:
-    """
-    Loads validation rules if validation_rules.json exists.
-    If it does not exist, returns empty rules so the validator still runs.
-    """
     if CONFIG_FILE.exists():
         with open(CONFIG_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    print("No validation_rules.json found. Using automatic generic validation only.")
+
+    print("No validation_rules.json found. Using generic validation only.")
     return {}
-# ---------------------------------------------------------------------
-#Build expectations dynamically from rules 
-# ---------------------------------------------------------------------
-
-
-    expectations = []
-    # ------------------------------------------------------------
-    # 1. Generic rules for ANY dataset
-    # ------------------------------------------------------------
-    
-    # Dataset should not be empty
-    #expectations.append(
-      #  gxe.ExpectTableRowCountToBeBetween(min_value=1)
-    #)
-    
-    # Every column should exist and not be completely empty
-    for column in df.columns:
-        expectations.append(
-            gxe.ExpectColumnValuesToNotBeNull(
-                column=column,
-                mostly=0.50
-            )
-        )
-    # If there is an ID-like column, make it unique
-    for column in df.columns:
-        lower_col = column.lower()
-        if lower_col in ["id", "lineid", "line_id", "eventid", "event_id"]:
-            expectations.append(
-                gxe.ExpectColumnValuesToBeUnique(column=column)
-            )     
-        
-    # Numeric columns should have reasonable non-null numeric values
-    numeric_columns = df.select_dtypes(include=["number"]).columns
-    for column in numeric_columns:
-        expectations.append(
-            gxe.ExpectColumnValuesToNotBeNull(
-                column=column,
-                mostly=0.50
-            )
-        )
-    # ------------------------------------------------------------
-    # 2. Optional dataset-specific rules from JSON
-    # ------------------------------------------------------------
-    
-    for column in rules.get("not_null", []):
-        if column in df.columns:
-            expectations.append(
-                gxe.ExpectColumnValuesToNotBeNull(column=column)
-            )
-
-    for column in rules.get("unique", []):
-        if column in df.columns:
-            expectations.append(
-                gxe.ExpectColumnValuesToBeUnique(column=column)
-            )
-
-    for column, value_set in rules.get("in_set", {}).items():
-        if column in df.columns:
-            expectations.append(
-                gxe.ExpectColumnValuesToBeInSet(
-                    column=column,
-                    value_set=list(value_set),
-                )
-            )
-
-    for column, regex in rules.get("regex", {}).items():
-        if column in df.columns:
-            expectations.append(
-                gxe.ExpectColumnValuesToMatchRegex(
-                    column=column,
-                    regex=regex,
-                )
-            )
-
-    for column, bounds in rules.get("between", {}).items():
-        if column in df.columns:
-            expectations.append(
-                gxe.ExpectColumnValuesToBeBetween(
-                    column=column,
-                    min_value=bounds["min"],
-                    max_value=bounds["max"],
-                )
-            )
-
-    for column, bounds in rules.get("mean_between", {}).items():
-        if column in df.columns:
-            expectations.append(
-                gxe.ExpectColumnMeanToBeBetween(
-                    column=column,
-                    min_value=bounds["min"],
-                    max_value=bounds["max"],
-                )
-            )
-
-    return expectations
 
 
 def run_validation(
     input_path: Path = INPUT_FILE,
     output_path: Path = OUTPUT_FILE,
+    custom_rules=None,
 ) -> dict:
+
     df = pd.read_csv(input_path)
 
     if "has_failure" in df.columns:
         df["has_failure"] = pd.to_numeric(df["has_failure"], errors="coerce")
 
-    rules = load_rules()
-  
+    # Choose custom rules if user provided them, otherwise use default rules
+    if custom_rules:
+        try:
+            if isinstance(custom_rules, str):
+                rules = json.loads(custom_rules)
+            else:
+                rules = custom_rules
+        except Exception as e:
+            raise ValueError(f"Invalid custom rules JSON: {e}")
+    else:
+        rules = load_rules()
 
     ctx = gx.get_context(mode="ephemeral")
     validator = ctx.sources.pandas_default.read_dataframe(df)
 
-    # Generic checks
+    # ------------------------------------------------------------
+    # 1. Generic rules for ANY dataset
+    # ------------------------------------------------------------
     for column in df.columns:
-        validator.expect_column_values_to_not_be_null(column)
+        validator.expect_column_values_to_not_be_null(
+            column=column,
+            mostly=0.50
+        )
 
-    # Unique ID check
-    if "LineId" in df.columns:
-        validator.expect_column_values_to_be_unique("LineId")
+    for column in df.columns:
+        lower_col = column.lower()
+        if lower_col in ["id", "lineid", "line_id", "eventid", "event_id"]:
+            validator.expect_column_values_to_be_unique(column=column)
 
-    # Optional rules
-    rules = load_rules()
-
+    # ------------------------------------------------------------
+    # 2. Optional custom/default rules
+    # ------------------------------------------------------------
     for column in rules.get("not_null", []):
         if column in df.columns:
-            validator.expect_column_values_to_not_be_null(column)
+            validator.expect_column_values_to_not_be_null(column=column)
 
     for column in rules.get("unique", []):
         if column in df.columns:
-            validator.expect_column_values_to_be_unique(column)
+            validator.expect_column_values_to_be_unique(column=column)
+
+    for column, value_set in rules.get("in_set", {}).items():
+        if column in df.columns:
+            validator.expect_column_values_to_be_in_set(
+                column=column,
+                value_set=list(value_set)
+            )
+
+    for column, regex in rules.get("regex", {}).items():
+        if column in df.columns:
+            validator.expect_column_values_to_match_regex(
+                column=column,
+                regex=regex
+            )
+
+    for column, bounds in rules.get("between", {}).items():
+        if column in df.columns:
+            validator.expect_column_values_to_be_between(
+                column=column,
+                min_value=bounds["min"],
+                max_value=bounds["max"]
+            )
+
+    for column, bounds in rules.get("mean_between", {}).items():
+        if column in df.columns:
+            validator.expect_column_mean_to_be_between(
+                column=column,
+                min_value=bounds["min"],
+                max_value=bounds["max"]
+            )
 
     result = validator.validate()
 
-   
     raw_candidate = (
         result.to_json_dict()
         if hasattr(result, "to_json_dict")
@@ -180,6 +118,7 @@ def run_validation(
     raw = raw_candidate if isinstance(raw_candidate, dict) else json.loads(raw_candidate)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
+
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(raw, f, indent=2, default=str)
 
